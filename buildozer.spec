@@ -42,17 +42,17 @@ version = 0.1
 
 # (list) Application requirements
 # comma separated e.g. requirements = sqlite3,kivy
-requirements = python==3.12.3, kivy==2.3.0, kivymd, pillow, docutils, kivy-deps.angle, kivy-deps.glew, kivy-deps.sdl2, Kivy-Garden, pygments, pypiwin32, os, csv, datatime, pandas
+requirements = python==3.12.3, kivy==2.3.0, kivymd, pillow, docutils, kivy-deps.angle, kivy-deps.glew, kivy-deps.sdl2, Kivy-Garden, pygments, pypiwin32, os, csv, datatime, pandas, numpy, python-dateutil, pytz, tzdata
 
 # (str) Custom source folders for requirements
 # Sets custom source for any requirements with recipes
 # requirements.source.kivy = ../../kivy
 
 # (str) Presplash of the application
-#presplash.filename = %(source.dir)s/data/presplash.png
+presplash.filename = %(source.dir)s/icon.png
 
 # (str) Icon of the application
-#icon.filename = %(source.dir)s/data/icon.png
+icon.filename = %(source.dir)s/icon.png
 
 # (list) Supported orientations
 # Valid options are: landscape, portrait, portrait-reverse or landscape-reverse
@@ -329,7 +329,7 @@ android.allow_backup = True
 #p4a.fork = kivy
 
 # (str) python-for-android branch to use, defaults to master
-#p4a.branch = master
+#p4a.branch = develop
 
 # (str) python-for-android specific commit to use, defaults to HEAD, must be within p4a.branch
 #p4a.commit = HEAD
