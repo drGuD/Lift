@@ -21,6 +21,8 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y gettext
+          sudo apt-get install -y autopoint
+          which autopoint
 
       - name: Cache Buildozer global directory
         uses: actions/cache@v2
