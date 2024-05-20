@@ -1,104 +1,45 @@
 name: CI
-
 on:
   push:
-    branches: [main]
+    branches: [ main ]
 
 jobs:
   build:
     runs-on: ubuntu-20.04
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v2
 
-      - name: Update package list and upgrade existing packages
+      # Get current date for cache key
+      - name: Get Date
+        id: get-date
         run: |
-          sudo apt-get update
-          sudo apt-get upgrade -y
-
-      - name: Install required system packages
-        run: |
-          sudo apt-get install -y \
-            git \
-            zip \
-            unzip \
-            openjdk-17-jdk \
-            python3-pip \
-            autoconf \
-            libtool \
-            pkg-config \
-            zlib1g-dev \
-            libncurses5-dev \
-            libncursesw5-dev \
-            libtinfo5 \
-            cmake \
-            libffi-dev \
-            libssl-dev \
-            ffmpeg \
-            libsdl2-dev \
-            libsdl2-image-dev \
-            libsdl2-mixer-dev \
-            libsdl2-ttf-dev \
-            libportmidi-dev \
-            libswscale-dev \
-            libavformat-dev \
-            libavcodec-dev \
-            libgstreamer1.0-dev \
-            libsqlite3-dev \
-            sqlite3 \
-            bzip2 \
-            libbz2-dev \
-            liblzma-dev \
-            libreadline-dev \
-            libunwind-dev \
-            uuid-dev \
-            gettext \
-            autopoint
-
-      - name: Install Cython
-        run: pip install cython==0.29.33
-
-      - name: Install Buildozer
-        run: pip install buildozer
-
-      - name: Download and install Android SDK
-        run: |
-          wget https://dl.google.com/android/repository/commandlinetools-linux-8512546_latest.zip -O commandlinetools.zip
-          mkdir -p $HOME/android-sdk/cmdline-tools
-          unzip commandlinetools.zip -d $HOME/android-sdk/cmdline-tools
-          mv $HOME/android-sdk/cmdline-tools/cmdline-tools $HOME/android-sdk/cmdline-tools/latest
-          export ANDROID_HOME=$HOME/android-sdk
-          export PATH=$PATH:$ANDROID_HOME/cmdline-tools/latest/bin
-          sdkmanager --sdk_root=$ANDROID_HOME --licenses
-          sdkmanager --sdk_root=$ANDROID_HOME "platform-tools" "platforms;android-30" "build-tools;30.0.3"
+          echo "::set-output name=date::$(date -u '+%Y%m%d')"
+        shell: bash
 
       - name: Cache Buildozer global directory
         uses: actions/cache@v2
         with:
-          path: ~/.buildozer
-          key: buildozer-global-${{ hashFiles('buildozer.spec') }}
-
-      - name: Get current date for cache key
-        id: get-date
-        run: echo "::set-output name=date::$(date -u '+%Y%m%d')"
+          path: .buildozer_global
+          key: buildozer-global-${{ hashFiles('buildozer.spec') }} # Adjust path as needed
 
       - name: Cache Buildozer build directory
         uses: actions/cache@v2
         with:
-          path: ./.buildozer
+          path: .buildozer
           key: ${{ runner.os }}-${{ steps.get-date.outputs.date }}-${{ hashFiles('buildozer.spec') }}
           restore-keys: |
             ${{ runner.os }}-${{ hashFiles('buildozer.spec') }}
 
       - name: Build with Buildozer
-        run: |
-          export ANDROID_HOME=$HOME/android-sdk
-          export PATH=$PATH:$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/platform-tools
-          buildozer -v android debug
+        uses: ArtemSBulgakov/buildozer-action@v1
+        id: buildozer
+        with:
+          command: buildozer -v android debug
+          buildozer_version: stable
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v2
         with:
-          name: apk
-          path: ./.buildozer/android/platform/build/dists/*/build/outputs/apk/debug/*.apk
+          name: package
+          path: ${{ steps.buildozer.outputs.filename }}
