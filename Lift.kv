@@ -1,0 +1,1627 @@
+<Home_Widget>:
+
+    canvas.before:
+        Color:
+            rgba: 1, 0.682, 0.012, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+    GridLayout:
+        cols: 1
+        size_hint_y: None
+        size: root.width, root.height
+        spacing: 10
+
+        Label:
+            text: "Aplikacija LIFT"
+            font_size:80
+            color: 0, 0, 0, 1
+            font_name: 'Roboto-Bold'
+
+        Image:
+            source: 'homepage.png'
+            size_hint: (1.9, 1.9)  # Adjust the size as needed
+            pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+        Label:
+            text: "Treniraj zdaj:"
+            color: 0, 0, 0, 1
+            font_name: 'Roboto-Bold'
+
+        Button:
+            id: Button_roke
+            text: "Treniraj roke!"
+            font_name: 'Roboto-Bold'
+            on_release: root.on_btn_roke_press()  # Call method on click
+        Button:
+            id: Button_noge
+            font_name: 'Roboto-Bold'
+            text: "Treniraj noge!"
+            on_release: root.on_btn_noge_press()
+            padding_y: 40
+
+        Button:
+            id: Button_statistika
+            font_name: 'Roboto-Bold'
+            text: "Statistika (Work in progress...)"
+
+</Home_Widget>
+
+<Roke_Widget>:
+    canvas.before:
+        Color:
+            rgba: 1, 0.682, 0.012, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+
+    ScrollView:
+        do_scroll_x: False
+        do_scroll_y: True
+        size: root.width, root.height
+
+
+        GridLayout:
+            cols: 1
+            size_hint_y: None
+            height: self.minimum_height  # Adjust height to fit all content
+            width: self.minimum_width    # Adjust width to fit parent
+            spacing: 10
+
+            Label:
+                id: Txt_navodila
+                text: root.navodila_text
+                size_hint_y: None
+                height: self.texture_size[1] if self.texture_size[1] > 0 else 1
+                padding_y: 50
+                color: 0, 0, 0, 1
+                font_name: 'Roboto-Bold'
+
+            Label:
+                text: "Vpisovanje napredka"
+                font_size:50
+                bold:True
+                size_hint_y: None
+                color: 0, 0, 0, 1
+                font_name: 'Roboto-Bold'
+
+            GridLayout:
+                cols: 2
+                size_hint_y: None
+                height: self.minimum_height
+                spacing: 10
+
+                Button:
+                    id: Button_home
+                    text: 'Home'
+                    size_hint_y: None
+                    height: dp(50)
+                    background_color: 0.020, 0.396, 0.329, 1
+                    font_name: 'Roboto-Bold'
+                    background_normal: ''
+                    background_down: ''
+                    on_release: root.button_home()
+
+                Button:
+                    id: Button_lift
+                    text: 'Lift!'
+                    size_hint_y: None
+                    height: dp(50)
+                    background_color: 0.020, 0.396, 0.329, 1
+                    font_name: 'Roboto-Bold'
+                    background_normal: ''
+                    background_down: ''
+                    on_release: root.button_lift_roke()
+
+                GridLayout:
+                    cols: 1
+                    size_hint_y: None
+                    height: self.minimum_height
+                    spacing: 10
+
+            BoxLayout:
+                orientation: 'vertical'
+                size_hint_y: None
+                #height: dp(100)
+                spacing: 10
+                GridLayout:
+                    cols:3
+                    Label:
+                        text: "Dan"
+                        #font_size:20
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                    Label:
+                        text: "Mesec"
+                        #font_size:20
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                    Label:
+                        text: "Leto"
+                        #font_size:20
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                    TextInput:
+                        id:Txt_dan
+                        text: root.dan_text
+                        on_text: root.dan_text = self.text
+                        multiline: False
+                        halign: 'center'
+                        valign: 'middle'
+                    TextInput:
+                        id:Txt_mesec
+                        text: root.mesec_text
+                        on_text: root.mesec_text = self.text
+                        multiline: False
+                        halign: 'center'
+                        valign: 'middle'
+                    TextInput:
+                        id:Txt_leto
+                        text: root.leto_text
+                        on_text: root.leto_text = self.text
+                        multiline: False
+                        halign: 'center'
+                        valign: 'middle'
+
+                        spacing: 10
+
+            # Butterfly
+            BoxLayout:
+                orientation: 'vertical'
+                size_hint_y: None
+                height: dp(150)
+                spacing: 10
+                GridLayout:
+                    cols: 3
+                    Label:
+                        text: "Butterfly 3x10:"
+                        bold:True
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                    TextInput:
+                        id:Txt_butterfly
+                        text: root.butterfly_text
+                        on_text: root.butterfly_text = self.text
+                        multiline: False
+                        font_size:50
+                        halign: 'center'
+                        valign: 'middle'
+                    Label:
+                        text: "  kg  "
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                        haling:'left'
+                        size_hint_x: None
+                        width: self.texture_size[0]
+
+                GridLayout:
+                    cols: 5
+                    Label:
+                        text: 'Fail'
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                        font_size:20
+                        halign: 'center'
+                        valign: 'middle'
+                    Label:
+                        text: 'Zelo težko'
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                        font_size:20
+                        halign: 'center'
+                        valign: 'middle'
+                    Label:
+                        text: 'Naporno'
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                        font_size:20
+                        halign: 'center'
+                        valign: 'middle'
+                    Label:
+                        text: 'Lahko'
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                        font_size:20
+                        halign: 'center'
+                        valign: 'middle'
+                    Label:
+                        text: 'Zelo lahko'
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                        font_size:20
+                        halign: 'center'
+                        valign: 'middle'
+                Slider:
+                    id:Slider_butterfly
+                    min: 0
+                    max: 4
+                    value: root.butterfly_value
+                    on_value: root.butterfly_value = self.value
+                    step: 1
+                    size_hint_x: 0.85
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+
+            # Rear Delt Fly
+            BoxLayout:
+                orientation: 'vertical'
+                size_hint_y: None
+                height: dp(150)
+                spacing: 10
+                GridLayout:
+                    cols: 3
+                    Label:
+                        text: "Rear Delt Fly 3x10:"
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                        bold:True
+                    TextInput:
+                        id:Txt_delt
+                        text: root.delt_text
+                        on_text: root.delt_text = self.text
+                        multiline: False
+                        font_size:50
+                        halign: 'center'
+                        valign: 'middle'
+                    Label:
+                        text: "  kg  "
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                        haling:'left'
+                        size_hint_x: None
+                        width: self.texture_size[0]
+
+                GridLayout:
+                    cols: 5
+                    Label:
+                        text: 'Fail'
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                        font_size:20
+                        halign: 'center'
+                        valign: 'middle'
+                    Label:
+                        text: 'Zelo težko'
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                        font_size:20
+                        halign: 'center'
+                        valign: 'middle'
+                    Label:
+                        text: 'Naporno'
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                        font_size:20
+                        halign: 'center'
+                        valign: 'middle'
+                    Label:
+                        text: 'Lahko'
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                        font_size:20
+                        halign: 'center'
+                        valign: 'middle'
+                    Label:
+                        text: 'Zelo lahko'
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                        font_size:20
+                        halign: 'center'
+                        valign: 'middle'
+                Slider:
+                    id:Slider_delt
+                    min: 0
+                    max: 4
+                    value: root.delt_value
+                    on_value: root.delt_value = self.value
+                    step: 1
+                    size_hint_x: 0.85
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+
+            # Lat. Raise
+            BoxLayout:
+                orientation: 'vertical'
+                size_hint_y: None
+                height: dp(150)
+                spacing: 10
+                GridLayout:
+                    cols: 3
+                    Label:
+                        text: "Lat. Raise 3x10:"
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                        bold:True
+                    TextInput:
+                        id:Txt_raise
+                        text: root.raise_text
+                        on_text: root.raise_text = self.text
+                        multiline: False
+                        font_size:50
+                        halign: 'center'
+                        valign: 'middle'
+                    Label:
+                        text: "  kg  "
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                        haling:'left'
+                        size_hint_x: None
+                        width: self.texture_size[0]
+
+                GridLayout:
+                    cols: 5
+                    Label:
+                        text: 'Fail'
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                        font_size:20
+                        halign: 'center'
+                        valign: 'middle'
+                    Label:
+                        text: 'Zelo težko'
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                        font_size:20
+                        halign: 'center'
+                        valign: 'middle'
+                    Label:
+                        text: 'Naporno'
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                        font_size:20
+                        halign: 'center'
+                        valign: 'middle'
+                    Label:
+                        text: 'Lahko'
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                        font_size:20
+                        halign: 'center'
+                        valign: 'middle'
+                    Label:
+                        text: 'Zelo lahko'
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                        font_size:20
+                        halign: 'center'
+                        valign: 'middle'
+                Slider:
+                    id:Slider_raise
+                    min: 0
+                    max: 4
+                    value: root.raise_value
+                    on_value: root.raise_value = self.value
+                    step: 1
+                    size_hint_x: 0.85
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+
+            # Div. Lat. Pull
+            BoxLayout:
+                orientation: 'vertical'
+                size_hint_y: None
+                height: dp(150)
+                spacing: 10
+                GridLayout:
+                    cols: 3
+                    Label:
+                        text: "Div. Lat. Pull 3x10:"
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                        bold:True
+                    TextInput:
+                        id:Txt_pull
+                        text: root.pull_text
+                        on_text: root.pull_text = self.text
+                        multiline: False
+                        font_size:50
+                        halign: 'center'
+                        valign: 'middle'
+                    Label:
+                        text: "  kg  "
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                        haling:'left'
+                        size_hint_x: None
+                        width: self.texture_size[0]
+                GridLayout:
+                    cols: 5
+                    Label:
+                        text: 'Fail'
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                        font_size:20
+                        halign: 'center'
+                        valign: 'middle'
+                    Label:
+                        text: 'Zelo težko'
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                        font_size:20
+                        halign: 'center'
+                        valign: 'middle'
+                    Label:
+                        text: 'Naporno'
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                        font_size:20
+                        halign: 'center'
+                        valign: 'middle'
+                    Label:
+                        text: 'Lahko'
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                        font_size:20
+                        halign: 'center'
+                        valign: 'middle'
+                    Label:
+                        text: 'Zelo lahko'
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                        font_size:20
+                        halign: 'center'
+                        valign: 'middle'
+                Slider:
+                    id:Slider_pull
+                    min: 0
+                    max: 4
+                    value: root.pull_value
+                    on_value: root.pull_value = self.value
+                    step: 1
+                    size_hint_x: 0.85
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+
+            # Chest press
+            BoxLayout:
+                orientation: 'vertical'
+                size_hint_y: None
+                height: dp(150)
+                spacing: 10
+                GridLayout:
+                    cols: 3
+                    Label:
+                        text: "Chest Press 3x10:"
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                        bold:True
+                    TextInput:
+                        id:Txt_press
+                        text: root.press_text
+                        on_text: root.press_text = self.text
+                        multiline: False
+                        font_size:50
+                        halign: 'center'
+                        valign: 'middle'
+                    Label:
+                        text: "  kg  "
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                        haling:'left'
+                        size_hint_x: None
+                        width: self.texture_size[0]
+                GridLayout:
+                    cols: 5
+                    Label:
+                        text: 'Fail'
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                        font_size:20
+                        halign: 'center'
+                        valign: 'middle'
+                    Label:
+                        text: 'Zelo težko'
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                        font_size:20
+                        halign: 'center'
+                        valign: 'middle'
+                    Label:
+                        text: 'Naporno'
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                        font_size:20
+                        halign: 'center'
+                        valign: 'middle'
+                    Label:
+                        text: 'Lahko'
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                        font_size:20
+                        halign: 'center'
+                        valign: 'middle'
+                    Label:
+                        text: 'Zelo lahko'
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                        font_size:20
+                        halign: 'center'
+                        valign: 'middle'
+                Slider:
+                    id:Slider_press
+                    min: 0
+                    max: 4
+                    value: root.press_value
+                    on_value: root.press_value = self.value
+                    step: 1
+                    size_hint_x: 0.85
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+
+            # Vertical Row
+            BoxLayout:
+                orientation: 'vertical'
+                size_hint_y: None
+                height: dp(150)
+                spacing: 10
+                GridLayout:
+                    cols: 3
+                    Label:
+                        text: "Vertical Row 3x10:"
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                        bold:True
+                    TextInput:
+                        id:Txt_row
+                        text: root.row_text
+                        on_text: root.row_text = self.text
+                        multiline: False
+                        font_size:50
+                        halign: 'center'
+                        valign: 'middle'
+                    Label:
+                        text: "  kg  "
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                        haling:'left'
+                        size_hint_x: None
+                        width: self.texture_size[0]
+                GridLayout:
+                    cols: 5
+                    Label:
+                        text: 'Fail'
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                        font_size:20
+                        halign: 'center'
+                        valign: 'middle'
+                    Label:
+                        text: 'Zelo težko'
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                        font_size:20
+                        halign: 'center'
+                        valign: 'middle'
+                    Label:
+                        text: 'Naporno'
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                        font_size:20
+                        halign: 'center'
+                        valign: 'middle'
+                    Label:
+                        text: 'Lahko'
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                        font_size:20
+                        halign: 'center'
+                        valign: 'middle'
+                    Label:
+                        text: 'Zelo lahko'
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                        font_size:20
+                        halign: 'center'
+                        valign: 'middle'
+                Slider:
+                    id:Slider_row
+                    min: 0
+                    max: 4
+                    value: root.row_value
+                    on_value: root.row_value = self.value
+                    step: 1
+                    size_hint_x: 0.85
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+
+            # Abdomen
+            BoxLayout:
+                orientation: 'vertical'
+                size_hint_y: None
+                height: dp(150)
+                spacing: 10
+                GridLayout:
+                    cols: 3
+                    Label:
+                        text: "Abdomen 3x10:"
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                        bold:True
+                    TextInput:
+                        id:Txt_abdomen
+                        text: root.abdomen_text
+                        on_text: root.abdomen_text = self.text
+                        multiline: False
+                        font_size:50
+                        halign: 'center'
+                        valign: 'middle'
+                    Label:
+                        text: "  kg  "
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                        haling:'left'
+                        size_hint_x: None
+                        width: self.texture_size[0]
+                GridLayout:
+                    cols: 5
+                    Label:
+                        text: 'Fail'
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                        font_size:20
+                        halign: 'center'
+                        valign: 'middle'
+                    Label:
+                        text: 'Zelo težko'
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                        font_size:20
+                        halign: 'center'
+                        valign: 'middle'
+                    Label:
+                        text: 'Naporno'
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                        font_size:20
+                        halign: 'center'
+                        valign: 'middle'
+                    Label:
+                        text: 'Lahko'
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                        font_size:20
+                        halign: 'center'
+                        valign: 'middle'
+                    Label:
+                        text: 'Zelo lahko'
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                        font_size:20
+                        halign: 'center'
+                        valign: 'middle'
+                Slider:
+                    id:Slider_abdomen
+                    min: 0
+                    max: 4
+                    value: root.abdomen_value
+                    on_value: root.abdomen_value = self.value
+                    step: 1
+                    size_hint_x: 0.85
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+
+            # Low Back
+            BoxLayout:
+                orientation: 'vertical'
+                size_hint_y: None
+                height: dp(150)
+                spacing: 10
+                GridLayout:
+                    cols: 3
+                    Label:
+                        text: "Low Back 3x10:"
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                        bold:True
+                    TextInput:
+                        id:Txt_back
+                        text: root.back_text
+                        on_text: root.back_text = self.text
+                        multiline: False
+                        font_size:50
+                        halign: 'center'
+                        valign: 'middle'
+                    Label:
+                        text: "  kg  "
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                        haling:'left'
+                        size_hint_x: None
+                        width: self.texture_size[0]
+                GridLayout:
+                    cols: 5
+                    Label:
+                        text: 'Fail'
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                        font_size:20
+                        halign: 'center'
+                        valign: 'middle'
+                    Label:
+                        text: 'Zelo težko'
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                        font_size:20
+                        halign: 'center'
+                        valign: 'middle'
+                    Label:
+                        text: 'Naporno'
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                        font_size:20
+                        halign: 'center'
+                        valign: 'middle'
+                    Label:
+                        text: 'Lahko'
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                        font_size:20
+                        halign: 'center'
+                        valign: 'middle'
+                    Label:
+                        text: 'Zelo lahko'
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                        font_size:20
+                        halign: 'center'
+                        valign: 'middle'
+                Slider:
+                    id:Slider_back
+                    min: 0
+                    max: 4
+                    value: root.back_value
+                    on_value: root.back_value = self.value
+                    step: 1
+                    size_hint_x: 0.85
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+
+            # Biceps
+            BoxLayout:
+                orientation: 'vertical'
+                size_hint_y: None
+                height: dp(150)
+                spacing: 10
+                GridLayout:
+                    cols: 3
+                    Label:
+                        text: "Biceps 3x10:"
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                        bold:True
+                    TextInput:
+                        id:Txt_biceps
+                        text: root.biceps_text
+                        on_text: root.biceps_text = self.text
+                        multiline: False
+                        font_size:50
+                        halign: 'center'
+                        valign: 'middle'
+                    Label:
+                        text: "  kg  "
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                        haling:'left'
+                        size_hint_x: None
+                        width: self.texture_size[0]
+                GridLayout:
+                    cols: 5
+                    Label:
+                        text: 'Fail'
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                        font_size:20
+                        halign: 'center'
+                        valign: 'middle'
+                    Label:
+                        text: 'Zelo težko'
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                        font_size:20
+                        halign: 'center'
+                        valign: 'middle'
+                    Label:
+                        text: 'Naporno'
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                        font_size:20
+                        halign: 'center'
+                        valign: 'middle'
+                    Label:
+                        text: 'Lahko'
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                        font_size:20
+                        halign: 'center'
+                        valign: 'middle'
+                    Label:
+                        text: 'Zelo lahko'
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                        font_size:20
+                        halign: 'center'
+                        valign: 'middle'
+                Slider:
+                    id:Slider_biceps
+                    min: 0
+                    max: 4
+                    value: root.biceps_value
+                    on_value: root.biceps_value = self.value
+                    step: 1
+                    size_hint_x: 0.85
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+
+            # Triceps
+            BoxLayout:
+                orientation: 'vertical'
+                size_hint_y: None
+                height: dp(150)
+                spacing: 10
+                GridLayout:
+                    cols: 3
+                    Label:
+                        text: "Triceps 3x10:"
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                        bold:True
+                    TextInput:
+                        id:Txt_triceps
+                        text: root.triceps_text
+                        on_text: root.triceps_text = self.text
+                        multiline: False
+                        font_size:50
+                        halign: 'center'
+                        valign: 'middle'
+                    Label:
+                        text: "  kg  "
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                        haling:'left'
+                        size_hint_x: None
+                        width: self.texture_size[0]
+                GridLayout:
+                    cols: 5
+                    Label:
+                        text: 'Fail'
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                        font_size:20
+                        halign: 'center'
+                        valign: 'middle'
+                    Label:
+                        text: 'Zelo  težko'
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                        font_size:20
+                        halign: 'center'
+                        valign: 'middle'
+                    Label:
+                        text: 'Naporno'
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                        font_size:20
+                        halign: 'center'
+                        valign: 'middle'
+                    Label:
+                        text: 'Lahko'
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                        font_size:20
+                        halign: 'center'
+                        valign: 'middle'
+                    Label:
+                        text: 'Zelo lahko'
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                        font_size:20
+                        halign: 'center'
+                        valign: 'middle'
+                Slider:
+                    id:Slider_triceps
+                    min: 0
+                    max: 4
+                    value: root.triceps_value
+                    on_value: root.triceps_value = self.value
+                    step: 1
+                    size_hint_x: 0.85
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+
+            BoxLayout:
+                orientation: 'vertical'
+                size_hint_y: None
+                height: dp(70)
+                spacing: 10
+
+                GridLayout:
+                    cols: 2
+                    size_hint_y: None
+                    height: dp(50)
+                    spacing: 10
+
+                    Button:
+                        id: Button_pocisti
+                        text: 'Počisti'
+                        background_color: 0.949, 0.259, 0.212, 1
+                        background_normal: ''
+                        background_down: ''
+                        on_press: root.pocisti_vse()
+
+                    Button:
+                        id: Button_save
+                        text: 'Save'
+                        background_color: 0.322, 0.718, 0.533, 1
+                        background_normal: ''
+                        background_down: ''
+                        on_press: root.button_save()
+
+</Roke_Widget>
+
+<Noge_Widget>:
+    canvas.before:
+        Color:
+            rgba: 1, 0.682, 0.012, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+
+    ScrollView:
+        do_scroll_x: False
+        do_scroll_y: True
+        size: root.width, root.height
+
+
+        GridLayout:
+            cols: 1
+            size_hint_y: None
+            height: self.minimum_height  # Adjust height to fit all content
+            width: self.minimum_width    # Adjust width to fit parent
+            spacing: 10
+
+            Label:
+                id: Txt_navodila_n
+                text: root.navodila_text_n
+                size_hint_y: None
+                height: self.texture_size[1] if self.texture_size[1] > 0 else 1
+                padding_y: 50
+                color: 0, 0, 0, 1
+                font_name: 'Roboto-Bold'
+
+            Label:
+                text: "Vpisovanje napredka"
+                font_size:50
+                bold:True
+                size_hint_y: None
+                color: 0, 0, 0, 1
+                font_name: 'Roboto-Bold'
+
+            GridLayout:
+                cols: 2
+                size_hint_y: None
+                height: self.minimum_height
+                spacing: 10
+
+                Button:
+                    id: Button_home_n
+                    text: 'Home'
+                    size_hint_y: None
+                    height: dp(50)
+                    background_color: 0.020, 0.396, 0.329, 1
+                    font_name: 'Roboto-Bold'
+                    background_normal: ''
+                    background_down: ''
+                    on_release: root.button_home_n()
+
+                Button:
+                    id: Button_lift_n
+                    text: 'Lift!'
+                    size_hint_y: None
+                    height: dp(50)
+                    background_color: 0.020, 0.396, 0.329, 1
+                    font_name: 'Roboto-Bold'
+                    background_normal: ''
+                    background_down: ''
+                    on_release: root.button_lift_noge()
+
+                GridLayout:
+                    cols: 1
+                    size_hint_y: None
+                    height: self.minimum_height
+                    spacing: 10
+
+            BoxLayout:
+                orientation: 'vertical'
+                size_hint_y: None
+                #height: dp(100)
+                spacing: 10
+                GridLayout:
+                    cols:3
+                    Label:
+                        text: "Dan"
+                        #font_size:20
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                    Label:
+                        text: "Mesec"
+                        #font_size:20
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                    Label:
+                        text: "Leto"
+                        #font_size:20
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                    TextInput:
+                        id:Txt_dan_n
+                        text: root.dan_text_n
+                        on_text: root.dan_text_n = self.text
+                        multiline: False
+                        halign: 'center'
+                        valign: 'middle'
+                    TextInput:
+                        id:Txt_mesec_n
+                        text: root.mesec_text_n
+                        on_text: root.mesec_text_n = self.text
+                        multiline: False
+                        halign: 'center'
+                        valign: 'middle'
+                    TextInput:
+                        id:Txt_leto_n
+                        text: root.leto_text_n
+                        on_text: root.leto_text_n = self.text
+                        multiline: False
+                        halign: 'center'
+                        valign: 'middle'
+
+                        spacing: 10
+
+            # Standing calf
+            BoxLayout:
+                orientation: 'vertical'
+                size_hint_y: None
+                height: dp(150)
+                spacing: 10
+                GridLayout:
+                    cols: 3
+                    Label:
+                        text: "Standing calf 3x10:"
+                        bold:True
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                    TextInput:
+                        id:Txt_calf
+                        text: root.calf_text
+                        on_text: root.calf_text = self.text
+                        multiline: False
+                        font_size:50
+                        halign: 'center'
+                        valign: 'middle'
+                    Label:
+                        text: "  kg  "
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                        haling:'left'
+                        size_hint_x: None
+                        width: self.texture_size[0]
+
+                GridLayout:
+                    cols: 5
+                    Label:
+                        text: 'Fail'
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                        font_size:20
+                        halign: 'center'
+                        valign: 'middle'
+                    Label:
+                        text: 'Zelo težko'
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                        font_size:20
+                        halign: 'center'
+                        valign: 'middle'
+                    Label:
+                        text: 'Naporno'
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                        font_size:20
+                        halign: 'center'
+                        valign: 'middle'
+                    Label:
+                        text: 'Lahko'
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                        font_size:20
+                        halign: 'center'
+                        valign: 'middle'
+                    Label:
+                        text: 'Zelo lahko'
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                        font_size:20
+                        halign: 'center'
+                        valign: 'middle'
+                Slider:
+                    id:Slider_calf
+                    min: 0
+                    max: 4
+                    value: root.calf_value
+                    on_value: root.calf_value = self.value
+                    step: 1
+                    size_hint_x: 0.85
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+
+            # Leg curl
+            BoxLayout:
+                orientation: 'vertical'
+                size_hint_y: None
+                height: dp(150)
+                spacing: 10
+                GridLayout:
+                    cols: 3
+                    Label:
+                        text: "Leg curl 3x10:"
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                        bold:True
+                    TextInput:
+                        id:Txt_curl
+                        text: root.curl_text
+                        on_text: root.curl_text = self.text
+                        multiline: False
+                        font_size:50
+                        halign: 'center'
+                        valign: 'middle'
+                    Label:
+                        text: "  kg  "
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                        haling:'left'
+                        size_hint_x: None
+                        width: self.texture_size[0]
+
+                GridLayout:
+                    cols: 5
+                    Label:
+                        text: 'Fail'
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                        font_size:20
+                        halign: 'center'
+                        valign: 'middle'
+                    Label:
+                        text: 'Zelo težko'
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                        font_size:20
+                        halign: 'center'
+                        valign: 'middle'
+                    Label:
+                        text: 'Naporno'
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                        font_size:20
+                        halign: 'center'
+                        valign: 'middle'
+                    Label:
+                        text: 'Lahko'
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                        font_size:20
+                        halign: 'center'
+                        valign: 'middle'
+                    Label:
+                        text: 'Zelo lahko'
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                        font_size:20
+                        halign: 'center'
+                        valign: 'middle'
+                Slider:
+                    id:Slider_curl
+                    min: 0
+                    max: 4
+                    value: root.curl_value
+                    on_value: root.curl_value = self.value
+                    step: 1
+                    size_hint_x: 0.85
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+
+            # Standing glute
+            BoxLayout:
+                orientation: 'vertical'
+                size_hint_y: None
+                height: dp(150)
+                spacing: 10
+                GridLayout:
+                    cols: 3
+                    Label:
+                        text: "Standing glute 3x10:"
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                        bold:True
+                    TextInput:
+                        id:Txt_glute
+                        text: root.glute_text
+                        on_text: root.glute_text = self.text
+                        multiline: False
+                        font_size:50
+                        halign: 'center'
+                        valign: 'middle'
+                    Label:
+                        text: "  kg  "
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                        haling:'left'
+                        size_hint_x: None
+                        width: self.texture_size[0]
+
+                GridLayout:
+                    cols: 5
+                    Label:
+                        text: 'Fail'
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                        font_size:20
+                        halign: 'center'
+                        valign: 'middle'
+                    Label:
+                        text: 'Zelo težko'
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                        font_size:20
+                        halign: 'center'
+                        valign: 'middle'
+                    Label:
+                        text: 'Naporno'
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                        font_size:20
+                        halign: 'center'
+                        valign: 'middle'
+                    Label:
+                        text: 'Lahko'
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                        font_size:20
+                        halign: 'center'
+                        valign: 'middle'
+                    Label:
+                        text: 'Zelo lahko'
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                        font_size:20
+                        halign: 'center'
+                        valign: 'middle'
+                Slider:
+                    id:Slider_glute
+                    min: 0
+                    max: 4
+                    value: root.glute_value
+                    on_value: root.glute_value = self.value
+                    step: 1
+                    size_hint_x: 0.85
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+
+            # Adductor
+            BoxLayout:
+                orientation: 'vertical'
+                size_hint_y: None
+                height: dp(150)
+                spacing: 10
+                GridLayout:
+                    cols: 3
+                    Label:
+                        text: "Adductor 3x10:"
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                        bold:True
+                    TextInput:
+                        id:Txt_adductor
+                        text: root.adductor_text
+                        on_text: root.adductor_text = self.text
+                        multiline: False
+                        font_size:50
+                        halign: 'center'
+                        valign: 'middle'
+                    Label:
+                        text: "  kg  "
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                        haling:'left'
+                        size_hint_x: None
+                        width: self.texture_size[0]
+                GridLayout:
+                    cols: 5
+                    Label:
+                        text: 'Fail'
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                        font_size:20
+                        halign: 'center'
+                        valign: 'middle'
+                    Label:
+                        text: 'Zelo težko'
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                        font_size:20
+                        halign: 'center'
+                        valign: 'middle'
+                    Label:
+                        text: 'Naporno'
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                        font_size:20
+                        halign: 'center'
+                        valign: 'middle'
+                    Label:
+                        text: 'Lahko'
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                        font_size:20
+                        halign: 'center'
+                        valign: 'middle'
+                    Label:
+                        text: 'Zelo lahko'
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                        font_size:20
+                        halign: 'center'
+                        valign: 'middle'
+                Slider:
+                    id:Slider_adductor
+                    min: 0
+                    max: 4
+                    value: root.adductor_value
+                    on_value: root.adductor_value = self.value
+                    step: 1
+                    size_hint_x: 0.85
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+
+            # Abductor
+            BoxLayout:
+                orientation: 'vertical'
+                size_hint_y: None
+                height: dp(150)
+                spacing: 10
+                GridLayout:
+                    cols: 3
+                    Label:
+                        text: "Abductor 3x10:"
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                        bold:True
+                    TextInput:
+                        id:Txt_abductor
+                        text: root.abductor_text
+                        on_text: root.abductor_text = self.text
+                        multiline: False
+                        font_size:50
+                        halign: 'center'
+                        valign: 'middle'
+                    Label:
+                        text: "  kg  "
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                        haling:'left'
+                        size_hint_x: None
+                        width: self.texture_size[0]
+                GridLayout:
+                    cols: 5
+                    Label:
+                        text: 'Fail'
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                        font_size:20
+                        halign: 'center'
+                        valign: 'middle'
+                    Label:
+                        text: 'Zelo težko'
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                        font_size:20
+                        halign: 'center'
+                        valign: 'middle'
+                    Label:
+                        text: 'Naporno'
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                        font_size:20
+                        halign: 'center'
+                        valign: 'middle'
+                    Label:
+                        text: 'Lahko'
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                        font_size:20
+                        halign: 'center'
+                        valign: 'middle'
+                    Label:
+                        text: 'Zelo lahko'
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                        font_size:20
+                        halign: 'center'
+                        valign: 'middle'
+                Slider:
+                    id:Slider_abductor
+                    min: 0
+                    max: 4
+                    value: root.abductor_value
+                    on_value: root.abductor_value = self.value
+                    step: 1
+                    size_hint_x: 0.85
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+
+            # Leg extension
+            BoxLayout:
+                orientation: 'vertical'
+                size_hint_y: None
+                height: dp(150)
+                spacing: 10
+                GridLayout:
+                    cols: 3
+                    Label:
+                        text: "Leg extension 3x10:"
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                        bold:True
+                    TextInput:
+                        id:Txt_extension
+                        text: root.extension_text
+                        on_text: root.extension_text = self.text
+                        multiline: False
+                        font_size:50
+                        halign: 'center'
+                        valign: 'middle'
+                    Label:
+                        text: "  kg  "
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                        haling:'left'
+                        size_hint_x: None
+                        width: self.texture_size[0]
+                GridLayout:
+                    cols: 5
+                    Label:
+                        text: 'Fail'
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                        font_size:20
+                        halign: 'center'
+                        valign: 'middle'
+                    Label:
+                        text: 'Zelo težko'
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                        font_size:20
+                        halign: 'center'
+                        valign: 'middle'
+                    Label:
+                        text: 'Naporno'
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                        font_size:20
+                        halign: 'center'
+                        valign: 'middle'
+                    Label:
+                        text: 'Lahko'
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                        font_size:20
+                        halign: 'center'
+                        valign: 'middle'
+                    Label:
+                        text: 'Zelo lahko'
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                        font_size:20
+                        halign: 'center'
+                        valign: 'middle'
+                Slider:
+                    id:Slider_extension
+                    min: 0
+                    max: 4
+                    value: root.extension_value
+                    on_value: root.extension_value = self.value
+                    step: 1
+                    size_hint_x: 0.85
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+
+            # Leg press
+            BoxLayout:
+                orientation: 'vertical'
+                size_hint_y: None
+                height: dp(150)
+                spacing: 10
+                GridLayout:
+                    cols: 3
+                    Label:
+                        text: "Leg press 3x10:"
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                        bold:True
+                    TextInput:
+                        id:Txt_leg
+                        text: root.leg_text
+                        on_text: root.leg_text = self.text
+                        multiline: False
+                        font_size:50
+                        halign: 'center'
+                        valign: 'middle'
+                    Label:
+                        text: "  kg  "
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                        haling:'left'
+                        size_hint_x: None
+                        width: self.texture_size[0]
+                GridLayout:
+                    cols: 5
+                    Label:
+                        text: 'Fail'
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                        font_size:20
+                        halign: 'center'
+                        valign: 'middle'
+                    Label:
+                        text: 'Zelo težko'
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                        font_size:20
+                        halign: 'center'
+                        valign: 'middle'
+                    Label:
+                        text: 'Naporno'
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                        font_size:20
+                        halign: 'center'
+                        valign: 'middle'
+                    Label:
+                        text: 'Lahko'
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                        font_size:20
+                        halign: 'center'
+                        valign: 'middle'
+                    Label:
+                        text: 'Zelo lahko'
+                        color: 0, 0, 0, 1
+                        font_name: 'Roboto-Bold'
+                        font_size:20
+                        halign: 'center'
+                        valign: 'middle'
+                Slider:
+                    id:Slider_leg
+                    min: 0
+                    max: 4
+                    value: root.leg_value
+                    on_value: root.leg_value = self.value
+                    step: 1
+                    size_hint_x: 0.85
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+
+            BoxLayout:
+                orientation: 'vertical'
+                size_hint_y: None
+                height: dp(70)
+                spacing: 10
+
+                GridLayout:
+                    cols: 2
+                    size_hint_y: None
+                    height: dp(50)
+                    spacing: 10
+
+                    Button:
+                        id: Button_pocisti_n
+                        text: 'Počisti'
+                        background_color: 0.949, 0.259, 0.212, 1
+                        background_normal: ''
+                        background_down: ''
+                        on_press: root.pocisti_vse_n()
+
+                    Button:
+                        id: Button_save_n
+                        text: 'Save'
+                        background_color: 0.322, 0.718, 0.533, 1
+                        background_normal: ''
+                        background_down: ''
+                        on_press: root.button_save_n()
+
+</Noge_Widget>
