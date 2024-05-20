@@ -74,7 +74,7 @@ jobs:
           export ANDROID_HOME=$PWD/android-sdk
           export PATH=$PATH:$ANDROID_HOME/cmdline-tools/latest/bin
           yes | sdkmanager --licenses
-          sdkmanager "platform-tools" "platforms;android-30" "build-tools;30.0.3"
+          sdkmanager --verbose "platform-tools" "platforms;android-30" "build-tools;30.0.3"
 
       - name: Cache Buildozer global directory
         uses: actions/cache@v2
