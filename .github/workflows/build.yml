@@ -53,7 +53,8 @@ jobs:
             libreadline-dev \
             libunwind-dev \
             uuid-dev \
-            gettext
+            gettext \
+            aidl
 
       - name: Install Cython
         run: |
