@@ -55,6 +55,10 @@ jobs:
             uuid-dev \
             gettext
 
+      - name: Install Cython
+        run: |
+          pip install cython==0.29.33
+
       - name: Install Buildozer
         run: |
           pip install buildozer
