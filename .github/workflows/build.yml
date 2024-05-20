@@ -67,9 +67,10 @@ jobs:
       - name: Download and install Android SDK
         run: |
           wget https://dl.google.com/android/repository/commandlinetools-linux-7583922_latest.zip
-          unzip commandlinetools-linux-7583922_latest.zip -d android-sdk
+          mkdir -p android-sdk/cmdline-tools
+          unzip commandlinetools-linux-7583922_latest.zip -d android-sdk/cmdline-tools
           mkdir -p android-sdk/cmdline-tools/latest
-          mv android-sdk/cmdline-tools/* android-sdk/cmdline-tools/latest/
+          mv android-sdk/cmdline-tools/cmdline-tools/* android-sdk/cmdline-tools/latest/
           export ANDROID_HOME=$PWD/android-sdk
           export PATH=$PATH:$ANDROID_HOME/cmdline-tools/latest/bin
           yes | sdkmanager --licenses
