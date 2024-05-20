@@ -54,7 +54,7 @@ jobs:
             libunwind-dev \
             uuid-dev \
             gettext \
-            aidl
+            autopoint
 
       - name: Install Cython
         run: |
@@ -64,10 +64,16 @@ jobs:
         run: |
           pip install buildozer
 
-      - name: Install Android build tools
+      - name: Download and install Android SDK
         run: |
+          wget https://dl.google.com/android/repository/commandlinetools-linux-7583922_latest.zip
+          unzip commandlinetools-linux-7583922_latest.zip -d android-sdk
+          mkdir -p android-sdk/cmdline-tools/latest
+          mv android-sdk/cmdline-tools/* android-sdk/cmdline-tools/latest/
+          export ANDROID_HOME=$PWD/android-sdk
+          export PATH=$PATH:$ANDROID_HOME/cmdline-tools/latest/bin
           yes | sdkmanager --licenses
-          sdkmanager "build-tools;30.0.3"
+          sdkmanager "platform-tools" "platforms;android-30" "build-tools;30.0.3"
 
       - name: Cache Buildozer global directory
         uses: actions/cache@v2
@@ -91,6 +97,8 @@ jobs:
 
       - name: Build with Buildozer
         run: |
+          export ANDROID_HOME=$PWD/android-sdk
+          export PATH=$PATH:$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/platform-tools
           buildozer -v android debug
 
       - name: Upload artifacts
