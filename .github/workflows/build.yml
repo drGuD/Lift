@@ -17,7 +17,7 @@ jobs:
           sudo apt-get update
           sudo apt-get upgrade -y
 
-      - name: Install required packages
+      - name: Install required system packages
         run: |
           sudo apt-get install -y \
             git \
@@ -57,57 +57,48 @@ jobs:
             autopoint
 
       - name: Install Cython
-        run: |
-          pip install cython==0.29.33
+        run: pip install cython==0.29.33
 
       - name: Install Buildozer
-        run: |
-          pip install buildozer
+        run: pip install buildozer
 
       - name: Download and install Android SDK
         run: |
-          wget https://dl.google.com/android/repository/commandlinetools-linux-7583922_latest.zip
-          mkdir -p android-sdk/cmdline-tools
-          unzip commandlinetools-linux-7583922_latest.zip -d android-sdk/cmdline-tools
-          mkdir -p android-sdk/cmdline-tools/latest
-          mv android-sdk/cmdline-tools/cmdline-tools/* android-sdk/cmdline-tools/latest/
-          export ANDROID_HOME=$PWD/android-sdk
+          wget https://dl.google.com/android/repository/commandlinetools-linux-8512546_latest.zip -O commandlinetools.zip
+          mkdir -p $HOME/android-sdk/cmdline-tools
+          unzip commandlinetools.zip -d $HOME/android-sdk/cmdline-tools
+          mv $HOME/android-sdk/cmdline-tools/cmdline-tools $HOME/android-sdk/cmdline-tools/latest
+          export ANDROID_HOME=$HOME/android-sdk
           export PATH=$PATH:$ANDROID_HOME/cmdline-tools/latest/bin
-          yes | sdkmanager --licenses
-          sdkmanager --verbose "platform-tools" "platforms;android-30" "build-tools;30.0.3"
-
-      - name: Accept all Android SDK licenses
-        run: |
-          yes | sdkmanager --licenses
+          sdkmanager --sdk_root=$ANDROID_HOME --licenses
+          sdkmanager --sdk_root=$ANDROID_HOME "platform-tools" "platforms;android-30" "build-tools;30.0.3"
 
       - name: Cache Buildozer global directory
         uses: actions/cache@v2
         with:
-          path: .buildozer_global
+          path: ~/.buildozer
           key: buildozer-global-${{ hashFiles('buildozer.spec') }}
 
       - name: Get current date for cache key
         id: get-date
-        run: |
-          echo "::set-output name=date::$(date -u '+%Y%m%d')"
-        shell: bash
+        run: echo "::set-output name=date::$(date -u '+%Y%m%d')"
 
       - name: Cache Buildozer build directory
         uses: actions/cache@v2
         with:
-          path: .buildozer
+          path: ./.buildozer
           key: ${{ runner.os }}-${{ steps.get-date.outputs.date }}-${{ hashFiles('buildozer.spec') }}
           restore-keys: |
             ${{ runner.os }}-${{ hashFiles('buildozer.spec') }}
 
       - name: Build with Buildozer
         run: |
-          export ANDROID_HOME=$PWD/android-sdk
+          export ANDROID_HOME=$HOME/android-sdk
           export PATH=$PATH:$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/platform-tools
           buildozer -v android debug
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v2
         with:
-          name: package
-          path: ./.buildozer/bin
+          name: apk
+          path: ./.buildozer/android/platform/build/dists/*/build/outputs/apk/debug/*.apk
